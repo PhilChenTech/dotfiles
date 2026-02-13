@@ -13,8 +13,8 @@ echo "🧹 開始清理 AI 優化環境..."
 # 1. 移除 .zshrc 中的載入指令
 if [ -f "$ZSHRC" ]; then
     # 使用 BSD sed 移除特定行
-    sed -i '' "/source \$AI_ENV_CONF/d" "$ZSHRC"
-    sed -i '' "/.ai_env/d" "$ZSHRC"
+    sed -i '' "/source.*\.ai_env/d" "$ZSHRC"
+    sed -i '' "/\.ai_env/d" "$ZSHRC"
     echo "✅ 已從 .zshrc 移除連結"
 fi
 

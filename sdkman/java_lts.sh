@@ -15,7 +15,7 @@ echo "🔍 正在搜尋 Amazon Corretto 的最新 LTS 版本..."
 # sdk list java 輸出會包含版本號與廠商
 # 我們過濾出 amzn，且版本號開頭為目前公認的 LTS (25, 21, 17, 11, 8)
 # 取其中最新的那一筆
-LATEST_LTS_AWS=$(sdk list java | grep "amzn" | grep -E "^\s+(25|21|17|11|8)\." | head -n 1 | awk '{print $NF}')
+LATEST_LTS_AWS=$(sdk list java | grep "amzn" | grep -E "(25|21|17|11|8)\." | head -n 1 | awk '{print $NF}')
 
 if [ -z "$LATEST_LTS_AWS" ]; then
     echo "⚠️ 無法自動偵測 LTS 版本，改為嘗試抓取最新版 amzn..."

@@ -33,7 +33,7 @@ PACKAGES=(
     fd ripgrep jq fzf bat zoxide btop
     rsync git openssh make
 )
-brew install "${PACKAGES[@]}"
+brew install "${PACKAGES[@]}" || true  # 允許部分包已安裝的情況
 
 # 3. 生成或更新獨立設定檔
 echo "📝 更新設定檔: $AI_ENV_CONF"
@@ -58,7 +58,7 @@ alias make='gmake'  # 使用現代 GNU Make (4.x+)
 alias grep='rg'
 alias find='fd'
 alias cat='bat --style=plain --paging=never'
-alias rsync='$(brew --prefix)/bin/rsync' # 強制使用 3.x 版本
+# rsync 不需要 alias，PATH 優先序已確保使用 Homebrew 版本
 
 # 4. 現代化跳轉與歷史
 eval "\$(zoxide init zsh)"

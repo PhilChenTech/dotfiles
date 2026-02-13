@@ -12,7 +12,7 @@ fi
 echo "🔍 正在搜尋最新的 Gradle 穩定版本..."
 
 # 2. 改良版抓取邏輯：過濾掉橫線、空白，並取第一筆純數字版本號
-LATEST_GRADLE=$(sdk list gradle | grep -E '^[[:space:]]+[0-9]+\.[0-9]+' | awk '{print $1}' | head -n 1)
+LATEST_GRADLE=$(sdk list gradle | grep -E '[0-9]+\.[0-9]+' | awk '{print $1}' | grep -E '^[0-9]' | head -n 1)
 
 # 如果還是抓不到，就直接執行預設安裝 (SDKMAN 會自動選最新穩定版)
 if [ -z "$LATEST_GRADLE" ]; then

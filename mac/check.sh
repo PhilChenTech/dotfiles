@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "📋 環境診斷中..."
 echo "---"
 printf "Bash 版本: "; bash --version | head -n 1
