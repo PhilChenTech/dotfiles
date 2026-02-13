@@ -13,14 +13,14 @@ echo -e "${BLUE}開始配置 SDKMAN! 開發環境...${NC}"
 
 # ========== 修復與優化區塊 ==========
 
-# 1. 修正 dotfiles 中的拼字錯誤 (--ype -> --type)
+# 1. 修正 dotfiles 中的拼字錯誤 (--type -> --type)
 echo -e "${BLUE}1. 檢查並修正 dotfiles 拼字錯誤...${NC}"
 if [ -d "$DOTFILES_PATH" ]; then
-    if grep -rl -- "--ype" "$DOTFILES_PATH" 2>/dev/null | grep -q .; then
-        grep -rl -- "--ype" "$DOTFILES_PATH" 2>/dev/null | xargs sed -i '' 's/--ype/--type/g'
+    if grep -rl -- "--type" "$DOTFILES_PATH" 2>/dev/null | grep -q .; then
+        grep -rl -- "--type" "$DOTFILES_PATH" 2>/dev/null | xargs sed -i '' 's/--type/--type/g'
         echo -e "${GREEN}✅ 拼字修正完成。${NC}"
     else
-        echo -e "${GREEN}✅ 未發現 --ype 拼字錯誤。${NC}"
+        echo -e "${GREEN}✅ 未發現 --type 拼字錯誤。${NC}"
     fi
 fi
 
