@@ -53,16 +53,20 @@ export PATH="$(brew --prefix)/bin:$PATH"
 # Note: Do NOT alias 'find' to 'fd' as fd has different syntax
 # and breaks many scripts (e.g., SDKMAN, find in makefiles).
 # Use 'fd' command directly when you need its features.
+# Also avoid aliasing 'grep' to 'rg' and 'cd' to 'z' as they have
+# different syntax and break existing scripts and workflows.
 alias sed='gsed'
 alias tar='gtar'
 alias awk='gawk'
 alias make='gmake'
-alias grep='rg'
 alias cat='bat --style=plain --paging=never'
 
-# 4. Modern Navigation and History
+# 4. Modern Navigation and History (zoxide available but not aliased)
+# User can invoke zoxide features with:
+# - z <directory>     # Jump to directory
+# - z -i              # Interactive search
+# - zoxide query      # Query database
 eval "$(zoxide init zsh)"
-alias cd='z'
 
 # 5. AI Core Execution Environment (Bash 5.x)
 export AI_BASH_PATH="$(brew --prefix)/bin/bash"
