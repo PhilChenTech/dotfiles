@@ -45,21 +45,24 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # 2. PATH Priority (prefer Homebrew-installed modern tools)
+# Using PATH priority is better than alias because:
+# - Works in scripts, cron jobs, remote execution
+# - Fully transparent to all tools
+# - No debugging confusion
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 export PATH="$(brew --prefix findutils)/bin:$PATH"
+export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix gawk)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix make)/libexec/gnubin:$PATH"
 export PATH="$(brew --prefix)/bin:$PATH"
 
-# 3. Command Compatibility and Aliases
-# Note: Do NOT alias 'find' to 'fd' as fd has different syntax
-# and breaks many scripts (e.g., SDKMAN, find in makefiles).
-# Use 'fd' command directly when you need its features.
-# Also avoid aliasing 'grep' to 'rg' and 'cd' to 'z' as they have
-# different syntax and break existing scripts and workflows.
-alias sed='gsed'
-alias tar='gtar'
-alias awk='gawk'
-alias make='gmake'
+# 3. Command Enhancement (only for features, not replacements)
+# Note: Do NOT use alias for tool replacement (grep->rg, cd->z, sed->gsed).
+# Use PATH priority instead - it works everywhere (scripts, cron, remote, etc).
+# Only alias for enhancement that doesn't break scripts.
 alias cat='bat --style=plain --paging=never'
+alias ac='btop'  # System monitor alias
 
 # 4. Modern Navigation and History (zoxide available but not aliased)
 # User can invoke zoxide features with:
