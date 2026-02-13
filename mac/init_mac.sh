@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # =================================================================
-# macOS AI 協作環境【120 分終極增強版】
-# 目標：全面升級被 Apple 凍結的工具，打造與 Linux 高度一致的開發環境
+# macOS AI Development Environment Setup
+# Goal: Upgrade Apple-frozen tools to match Linux standards
 # =================================================================
 
 set -e
@@ -10,9 +10,9 @@ set -e
 AI_ENV_CONF="$HOME/.ai_env"
 ZSHRC="$HOME/.zshrc"
 
-echo "🚀 開始執行 Mac 開發環境深度優化 (全工具升級版)..."
+echo "Starting Mac development environment optimization..."
 
-# 1. 自動定位 Homebrew
+# 1. Auto-locate Homebrew
 if [[ "$(uname -m)" == "arm64" ]]; then
     BREW_PATH="/opt/homebrew/bin/brew"
 else
@@ -20,76 +20,75 @@ else
 fi
 
 if ! command -v brew &> /dev/null; then
-    echo "📦 正在安裝 Homebrew..."
+    echo "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$($BREW_PATH shellenv)"
 fi
 
-# 2. 安裝全面升級工具包
-echo "📦 檢查並安裝現代化 Unix 工具..."
-# 加入了 rsync, git, openssh, make
+# 2. Install comprehensive tool package
+echo "Checking and installing modern Unix tools..."
 PACKAGES=(
     bash coreutils findutils gnu-sed gnu-tar grep awk
     fd ripgrep jq fzf bat zoxide btop
     rsync git openssh make
 )
-brew install "${PACKAGES[@]}" || true  # 允許部分包已安裝的情況
+brew install "${PACKAGES[@]}" || true
 
-# 3. 生成或更新獨立設定檔
-echo "📝 更新設定檔: $AI_ENV_CONF"
+# 3. Generate or update configuration file
+echo "Updating configuration: $AI_ENV_CONF"
 
 cat << EOF > "$AI_ENV_CONF"
-# === AI 協作與 Unix 環境優化 (由 init_mac.sh 自動產生) ===
+# === AI Collaboration and Unix Environment Optimization ===
 
-# 1. 語系與編碼
+# 1. Language and Encoding
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-# 2. 路徑優先序 (優先使用 Homebrew 安裝的現代工具)
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:\$PATH"
-export PATH="$(brew --prefix findutils)/bin:\$PATH"
-export PATH="$(brew --prefix)/bin:\$PATH"
+# 2. PATH Priority (prefer Homebrew-installed modern tools)
+export PATH="\$(brew --prefix coreutils)/libexec/gnubin:\$PATH"
+export PATH="\$(brew --prefix findutils)/bin:\$PATH"
+export PATH="\$(brew --prefix)/bin:\$PATH"
 
-# 3. 指令兼容性與別名 (Alias)
+# 3. Command Compatibility and Aliases
 alias sed='gsed'
 alias tar='gtar'
 alias awk='gawk'
-alias make='gmake'  # 使用現代 GNU Make (4.x+)
+alias make='gmake'
 alias grep='rg'
 alias find='fd'
 alias cat='bat --style=plain --paging=never'
-# rsync 不需要 alias，PATH 優先序已確保使用 Homebrew 版本
 
-# 4. 現代化跳轉與歷史
+# 4. Modern Navigation and History
 eval "\$(zoxide init zsh)"
 alias cd='z'
 
-# 5. 指定 AI 核心執行環境 (Bash 5.x)
-export AI_BASH_PATH="$(brew --prefix)/bin/bash"
+# 5. AI Core Execution Environment (Bash 5.x)
+export AI_BASH_PATH="\$(brew --prefix)/bin/bash"
 
-# 6. fzf 整合 fd
-export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
-export FZF_CTRL_T_COMMAND="\$FZF_DEFAULT_COMMAND"
+# 6. FZF Integration with fd
+export FZF_DEFAULT_COMMAND="fd --type file --strip-cwd-prefix --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="fd --type file --strip-cwd-prefix --hidden --follow --exclude .git"
 
 # === End of Configuration ===
 EOF
 
-# 4. 掛載到 .zshrc
+# 4. Mount to .zshrc
 if ! grep -q "source $AI_ENV_CONF" "$ZSHRC"; then
     echo -e "\n[ -f $AI_ENV_CONF ] && source $AI_ENV_CONF" >> "$ZSHRC"
-    echo "🔗 已連結設定至 .zshrc"
+    echo "Configuration linked to .zshrc"
 fi
 
-# 5. 更新 Brewfile 備份
+# 5. Update Brewfile backup
 brew bundle dump --force --file="./Brewfile"
 
 echo ""
-echo "✅ 全部工具已升級至 2026 年最新標準！"
+echo "All tools upgraded to 2026 latest standards!"
 echo "-------------------------------------------------------"
-echo "🌟 本次額外升級亮點："
-echo "1. Rsync 3.x: 支援增量備份與更好的中文檔名處理。"
-echo "2. GNU Make 4.x: 支援更多現代自動化編譯特性。"
-echo "3. OpenSSH: 獲取最新的加密協議與 FIDO2 支援。"
-echo "4. Git: 使用官方原版，脫離 Apple 修改版的延遲更新。"
+echo "Upgrade highlights:"
+echo "1. Rsync 3.x: Incremental backup and better UTF-8 support"
+echo "2. GNU Make 4.x: Modern automation features"
+echo "3. OpenSSH: Latest encryption protocols and FIDO2 support"
+echo "4. Git: Official version, independent from Apple modifications"
 echo "-------------------------------------------------------"
-echo "請執行 'source ~/.zshrc' 立即生效。"
+echo "Run 'source ~/.zshrc' to take effect immediately."
+
