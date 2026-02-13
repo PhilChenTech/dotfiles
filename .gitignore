@@ -1,1 +1,14 @@
 /.idea/
+# 忽略 macOS 系統檔案
+.DS_Store
+
+# 忽略腳本執行時產生的備份
+*.bak_*
+
+# 忽略個人的私人金鑰或敏感資訊 (如果有)
+.ssh/
+*.key
+*.pem
+
+# 忽略 Homebrew 產生的臨時紀錄
+.brew_cache/
